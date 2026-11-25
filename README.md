@@ -28,7 +28,8 @@ Ein quelloffenes Recherche-Werkzeug für Angehörige und Forschende. Es hilft, D
 | EHRI-Portal | direkt durchsucht |
 | Wikidata (Personen und Stolpersteine) | direkt durchsucht |
 | Europeana | direkt durchsucht, **eigener API-Key nötig** |
-| National Archives (USA), Katalog | Link (Schnittstelle folgt, braucht Proxy und eigenen Key) |
+| NARA, NSDAP-Mitgliederkartei (A3340, Zentral- und Ortsgruppenkartei) | ohne Proxy: passende Mikrofilmrollen; **mit eigenem Proxy: Volltext jeder Karte** |
+| NARA, National Archives Catalog (gesamter Katalog) | mit **eigenem Proxy und eigenem NARA-Key** |
 | Arolsen Archives | Link |
 | Yad Vashem, zentrale Namensdatenbank | Link |
 | Bundesarchiv, Gedenkbuch | Link |
@@ -44,13 +45,17 @@ Die ausführliche Prüfung jeder Quelle (Schnittstelle, Browser-Zugriff, Nutzung
 
 ## Eigene API-Keys (BYOK)
 
-Manche Quellen verlangen einen persönlichen, kostenlosen Schlüssel. Derzeit betrifft das nur **Europeana**:
+Manche Quellen verlangen einen persönlichen, kostenlosen Schlüssel: **Europeana** und der **NARA-Katalog** (Key per E-Mail an `Catalog_API@nara.gov`). So geht es am Beispiel Europeana:
 
 1. Bei Europeana ein Konto anlegen und unter <https://pro.europeana.eu/page/get-api> einen persönlichen API-Key beantragen.
 2. In archive-tracer unter **Einstellungen** eintragen.
 3. Der Key gilt standardmäßig nur für den aktuellen Tab. Nur wenn Sie „Auf diesem Gerät merken“ ankreuzen, bleibt er im Browser gespeichert. Oben rechts gibt es jederzeit **„Keys löschen“**.
 
 Keys werden nur an die jeweilige Quelle geschickt, nie an einen anderen Server.
+
+## Eigener Proxy für NARA
+
+Die NSDAP-Mitgliederkartei (A3340) und der NARA-Katalog lassen sich nicht direkt aus dem Browser abrufen. In `proxy/` liegt ein kleiner Cloudflare Worker, den Sie selbst und kostenlos einrichten. Er leitet nur an NARA weiter, speichert und protokolliert nichts. Anleitung: [docs/proxy.md](docs/proxy.md). Die Logik für die Kartei stammt aus dem Projekt NARA Trace.
 
 ## Datenschutz
 
@@ -74,7 +79,7 @@ Bei jedem Push auf `main` prüft und baut die GitHub Action (`.github/workflows/
 
 ## Geplant
 
-Phonetische Namenssuche (Daitch-Mokotoff, Beider-Morse) und transparenter Abgleich der Treffer · optionaler, selbst betriebener Proxy für NARA · optionale KI-Assistenz (Namensvarianten, Transliteration, Entziffern, Übersetzung) mit eigenem Key · Feinschliff für den Offline-Betrieb.
+Phonetische Namenssuche (Daitch-Mokotoff, Beider-Morse) und transparenter Abgleich der Treffer · optionale KI-Assistenz (Namensvarianten, Transliteration, Entziffern, Übersetzung) mit eigenem Key · Feinschliff für den Offline-Betrieb.
 
 ## Lizenz
 

@@ -13,6 +13,7 @@ Stand: **25.11.2026**. Alle Angaben unten beruhen auf echten Requests von diesem
 | # | Quelle | Einstufung | Key | CORS (getestet) | Abfrage auf Personenebene | Deep-Link (vorausgefüllt) |
 |---|---|---|---|---|---|---|
 | 1 | NARA Catalog API v2 | **api-proxy** (vorläufig) | ja, pro Nutzer (BYOK, per E-Mail) | ❌ derzeit nicht prüfbar (siehe unten) | Volltext `q=` | `catalog.archives.gov/search?q=…` (unverifiziert, SPA) |
+| 1a | NARA A3340 NSDAP-Mitgliederkartei (Open Dataset `nara-nsdap`) | **api-proxy** | nein | Manifest ✅ `*` (GitHub); Roll-Dateien ❌ (S3 ohne CORS, Preflight 403) | ja: OCR-Text jeder Karteikarte | `catalog.archives.gov/id/<Rollen-NAID>?objectPage=<Bild>` |
 | 2 | Deutsche Digitale Bibliothek (API v2) | **api-browser** | nein (v2) | ✅ `*`, auch Preflight | Volltext; eigener Index `person` (GND) | `deutsche-digitale-bibliothek.de/searchresults?query=…` |
 | 3 | Archivportal-D (über DDB API v2) | **api-browser** | nein | ✅ `*` | Volltext + Filter `fq=sector_fct:sec_01` | `archivportal-d.de/objekte?query=…` |
 | 4 | EHRI Portal API v1 | **api-browser** | nein | ✅ `*` | Volltext; Typen `DocumentaryUnit`, `HistoricalAgent` u. a. | `portal.ehri-project.eu/search?q=…` |
@@ -40,6 +41,15 @@ Stolpersteine sind über **Wikidata** zusätzlich per API durchsuchbar: Am 25.11
 - **Nutzungsbedingungen (wörtlich):** „Users will not scrape data or attempt to download all data from the Catalog via the API“ · „**Please do not cache or store any content returned by the API.**“ · Pflichthinweis: „This product uses the National Archives Catalog API but is not endorsed or certified by the National Archives and Records Administration.“ Die Metadaten gelten als gemeinfrei.
 - **Test 25.11.2026:** Alle Pfade unter `/api/v2/` (auch die Swagger-Seite `/api/v2/api-docs`) liefern mit und ohne Key-Header die HTML-Seite der Web-App (`X-Cache: Error from cloudfront`), ohne CORS-Header, und auch der Preflight bekommt keine CORS-Header. Mit einem gültigen Key ließ sich das nicht prüfen. In der Doku zeigt eine Beispielantwort vom Mai 2025 `access-control-allow-origin: *`.
 - **Einstufung:** Vorerst **api-proxy**, die vorsichtige Variante. Sobald ein Test mit gültigem Key zeigt, dass der Preflight für `x-api-key` durchgeht, stufe ich auf api-browser hoch. Dein Tool *NARA Trace* weiß hier vermutlich mehr.
+
+### 1a. NARA A3340 – NSDAP-Mitgliederkartei (Open Dataset) — api-proxy
+*Ergänzt am 25.11.2026, übernommen aus dem Projekt NARA Trace.*
+- **Was:** RG 242, Mikrofilmpublikation **A3340** (Serien-NAID 12044361): **MFKL** Zentralkartei (alphabetisch, 3.153 Rollen) und **MFOK** Ortsgruppenkartei (2.267 Rollen). NARA stellt die Daten als **offenen Datensatz** im S3-Bucket `nara-nsdap` bereit (Registry of Open Data on AWS). Das Manifest liegt unter <https://github.com/usnationalarchives/nsdap>. Kein Key nötig, keine interne Schnittstelle.
+- **Manifest:** `raw.githubusercontent.com/usnationalarchives/nsdap/main/docs/nsdap.json`, 973 KB, `Access-Control-Allow-Origin: *`. Pro Rolle: NAID, Kartei, Rollennummer, alphabetischer Bereich (z. B. „Schultze, Paul – Schultze, Robert“), S3-Pfad.
+- **Roll-Dateien:** `https://nara-nsdap.s3.us-east-2.amazonaws.com/<Pfad>/<NAID>.json`, ca. 2,5 MB, ca. 3.000 Kartenbilder mit `extractedText` (NARA-OCR), `objectFilename`, `objectId`. **Ohne CORS-Header**, der Preflight liefert 403. Deshalb ist für den Volltext ein eigener Proxy nötig.
+- **Vorgehen (wie NARA Trace):** Aus dem Manifest wird die Rolle bestimmt, in deren alphabetischen Bereich „Nachname Vorname“ fällt, plus Nachbarrollen, getrennt für MFKL und MFOK. Nur diese Rollen werden geladen (gezielte Nutzung, kein Herunterladen des Bestands). Ohne Proxy zeigt die App nur die Rollen mit Katalog-Link.
+- **Live-Test 25.11.2026 („Paul Schultze“):** 6 Rollen, 17.952 Kartenbilder in etwa 15 s. Treffer z. B. MFKL R0014, Bild 10, OCR „Schultze · Paul · …“.
+- **Unsicher:** Den Link-Parameter `?objectPage=<n>` (Bildposition in der Rolle) muss ich im Browser bestätigen.
 
 ### 2. Deutsche Digitale Bibliothek — api-browser
 - **Endpunkt:** `https://api.deutsche-digitale-bibliothek.de/2/search/index/search/select?q=…` (Solr-Syntax: `fq`, `rows`, `start`, `fl`, Facetten). Weitere Indizes: `person` (GND-Personen mit Lebensdaten), `organization`. OpenAPI-Spezifikation: `/2/q/openapi`.
@@ -106,7 +116,7 @@ Stolpersteine sind über **Wikidata** zusätzlich per API durchsuchbar: Am 25.11
 
 ## Offen / unsicher (ausdrücklich nicht geraten)
 
-1. **NARA:** CORS-Verhalten mit gültigem Key ungetestet, die API wirkte am 25.11.2026 nicht erreichbar (CloudFront-Fehlerseite). Außerdem steht **„do not cache or store any content returned by the API“** im Widerspruch zu einer Recherchemappe, die Metadaten speichert. Vorschlag: Für NARA-Treffer speichert die Mappe nur NAID, Link, Abrufdatum, Abfrage und die eigenen Notizen der Nutzenden. Der Titel wird bei Bedarf neu geladen. → **Deine Entscheidung.**
+1. **NARA:** Lösung seit 25.11.2026: Abfrage über einen eigenen Proxy (docs/proxy.md); Katalogtreffer werden in der Mappe nur als Kennung und Link gespeichert. Ursprünglicher Befund: CORS-Verhalten mit gültigem Key ungetestet, die API wirkte am 25.11.2026 nicht erreichbar (CloudFront-Fehlerseite). Außerdem steht **„do not cache or store any content returned by the API“** im Widerspruch zu einer Recherchemappe, die Metadaten speichert. Vorschlag: Für NARA-Treffer speichert die Mappe nur NAID, Link, Abrufdatum, Abfrage und die eigenen Notizen der Nutzenden. Der Titel wird bei Bedarf neu geladen. → **Deine Entscheidung.**
 2. **DDB-Nutzungsbedingungen:** Die API-Terms (`/content/terms/api`) sind derzeit nicht erreichbar (404), das Wiki ist zu Atlassian umgezogen. Ältere Fassungen verlangten einen Key und ein „Powered by Deutsche Digitale Bibliothek“-Logo. Die Attribution baue ich vorsorglich ein, die Rechtslage bleibt unbestätigt. Eine kurze Nachfrage bei `service@deutsche-digitale-bibliothek.de` wäre sinnvoll.
 3. **EHRI-Nutzungsbedingungen:** Die Seite war durch die Bot-Challenge nicht lesbar. Laut Data-Policy-Hinweis dürfen Daten mit besonderen Kategorien personenbezogener Daten nur zu Forschungszwecken genutzt werden.
 4. **Yad Vashem / Arolsen / Joods Monument / Mapping the Lives:** Deep-Link-Parameter muss ich im MVP im echten Browser prüfen. Die Nutzungsbedingungen von Yad Vashem sind ungelesen.

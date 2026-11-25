@@ -32,6 +32,14 @@ Der Stand vom 25.11.2026 mit allen offenen Punkten steht in [sources.md](sources
 - **USHMM:** Inhalte dürfen ohne schriftliche Zustimmung nicht zum Training von Machine-Learning-Systemen verwendet werden. Relevant für die geplante KI-Assistenz.
 - **Arolsen Archives, Yad Vashem, Joods Monument und andere:** nur Links, keine automatische Abfrage.
 
+## NSDAP-Mitgliederkartei (NARA A3340)
+
+- Die Karteien sind **Verwaltungsunterlagen der NSDAP**, also Täterüberlieferung. Sie sind weder vollständig noch neutral.
+- Ein Treffer belegt **keine** Identität: Namensgleichheit ist häufig, und die Texterkennung ist fehlerhaft (z. B. „Mohnung“ statt „Wohnung“). Auch Ortsnamen erscheinen als Treffer (z. B. „Kr. Goldberg“).
+- Ein fehlender Treffer beweist nicht, dass jemand kein Mitglied war. Die Überlieferung hat Lücken, und es werden nur ausgewählte Rollen durchsucht.
+- Maßgeblich sind das Kartenbild und der archivische Zusammenhang. Weitere Unterlagen (z. B. ehemaliges Berlin Document Center, heute Bundesarchiv) können die Angaben ergänzen oder widerlegen.
+- Bei Veröffentlichungen über Mitglieder sind die Persönlichkeitsrechte **lebender Angehöriger** zu beachten.
+
 ## Was das Werkzeug nicht ersetzt
 
 Online-Datenbanken bilden nur einen kleinen Teil der Überlieferung ab. Viele Bestände sind nicht digitalisiert, nicht erschlossen oder nur vor Ort einsehbar. Eine **schriftliche Anfrage** und der **Besuch im Archiv** bleiben unverzichtbar. Vorlagen dafür bietet die Seite „Wie geht es weiter?“.
