@@ -12,6 +12,7 @@ export function emptyQuery(): PersonQuery {
     birthPlace: '',
     lastResidence: '',
     parents: '',
+    membershipNumber: '',
   };
 }
 
@@ -44,6 +45,7 @@ export function describeQuery(q: PersonQuery): string {
   else if (q.birthYear) parts.push(`* ${q.birthYear} ±${q.birthYearTolerance}`);
   if (clean(q.birthPlace)) parts.push(`Geburtsort: ${clean(q.birthPlace)}`);
   if (clean(q.lastResidence)) parts.push(`letzter Wohnort: ${clean(q.lastResidence)}`);
+  if (clean(q.membershipNumber ?? '')) parts.push(`Mitgliedsnummer: ${clean(q.membershipNumber)}`);
   return parts.join('; ');
 }
 

@@ -1,0 +1,114 @@
+[
+ {
+  "id": "581244230",
+  "agency": "MFKL",
+  "box": "A0001",
+  "title": "Aab, Richard - Alfeldt, Otto",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-A0001"
+ },
+ {
+  "id": "581247254",
+  "agency": "MFKL",
+  "box": "A0002",
+  "title": "Ahlfeldt, Otto - Allewelt, Hans",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-A0002"
+ },
+ {
+  "id": "593485972",
+  "agency": "MFKL",
+  "box": "R0011",
+  "title": "Schulze, Johanna - Schulze, Konrad",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0011"
+ },
+ {
+  "id": "593488998",
+  "agency": "MFKL",
+  "box": "R0012",
+  "title": "Schulze, Konrad - Schulze, Max",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0012"
+ },
+ {
+  "id": "593492018",
+  "agency": "MFKL",
+  "box": "R0013",
+  "title": "Schulze, Max - Schulze, Paul",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0013"
+ },
+ {
+  "id": "593495034",
+  "agency": "MFKL",
+  "box": "R0014",
+  "title": "Schultze, Paul - Schultze, Robert",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0014"
+ },
+ {
+  "id": "593498062",
+  "agency": "MFKL",
+  "box": "R0015",
+  "title": "Schulze, Robert - Schulze, Walter",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0015"
+ },
+ {
+  "id": "593501078",
+  "agency": "MFKL",
+  "box": "R0016",
+  "title": "Schulze, Walter - Schulze, Willy",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0016"
+ },
+ {
+  "id": "593504132",
+  "agency": "MFKL",
+  "box": "R0017",
+  "title": "Schulze, Wilhelm - Schumm, Ernst",
+  "s3": "s3://nara-nsdap/A3340-MFKL/A3340-MFKL-R0017"
+ },
+ {
+  "id": "597027523",
+  "agency": "MFOK",
+  "box": "A0001",
+  "title": "Aa Von Da Emil - Abendschein, Otto",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-A0001"
+ },
+ {
+  "id": "597030545",
+  "agency": "MFOK",
+  "box": "A0002",
+  "title": "Abendschein, Otto - Abt, Helene",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-A0002"
+ },
+ {
+  "id": "602459764",
+  "agency": "MFOK",
+  "box": "T0004",
+  "title": "Schaarschmidt, Charlotte - Schacht, Dorothea",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-T0004"
+ },
+ {
+  "id": "602462722",
+  "agency": "MFOK",
+  "box": "T0005",
+  "title": "Schacht, Dorothea - Schade, Kurt",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-T0005"
+ },
+ {
+  "id": "602465684",
+  "agency": "MFOK",
+  "box": "T0006",
+  "title": "Schade, Kurt - Schädlich, Kä???",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-T0006"
+ },
+ {
+  "id": "602468648",
+  "agency": "MFOK",
+  "box": "T0007",
+  "title": "Schädlich, Käthe - Schäfer, Erika",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-T0007"
+ },
+ {
+  "id": "602471612",
+  "agency": "MFOK",
+  "box": "T0008",
+  "title": "Schäfer, Erika - Schäffer, Heinz",
+  "s3": "s3://nara-nsdap/A3340-MFOK/A3340-MFOK-T0008"
+ }
+]

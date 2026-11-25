@@ -16,6 +16,8 @@ export interface PersonQuery {
   birthPlace: string;
   lastResidence: string;
   parents: string;
+  /** NSDAP membership number, if known (used for the A3340 card index). */
+  membershipNumber: string;
 }
 
 /** Where a piece of information came from. Every hit and every folder entry carries one. */
@@ -45,6 +47,11 @@ export interface Hit {
   /** Year range as displayed, e.g. "1941–1942". */
   dateRange: string;
   provenance: Provenance;
+  /**
+   * "link-only": the source's terms forbid storing returned content (NARA Catalog API),
+   * so the folder keeps only id, link, date and query.
+   */
+  storage?: 'full' | 'link-only';
 }
 
 export interface SourceMeta {
@@ -68,6 +75,8 @@ export interface SearchContext {
   fetch: typeof fetch;
   signal?: AbortSignal;
   getKey: (name: string) => string | null;
+  /** URL of the user's own proxy, if configured. */
+  proxyUrl?: string | null;
   now: () => Date;
 }
 
@@ -75,6 +84,8 @@ export interface SearchResult {
   hits: Hit[];
   /** Total hits reported by the source (may exceed hits.length). */
   total: number;
+  /** Explanation shown above the hits (e.g. reduced mode without proxy). */
+  notice?: string;
 }
 
 export interface SourceAdapter {
@@ -89,6 +100,13 @@ export class MissingKeyError extends Error {
   constructor(public readonly keyName: string) {
     super(`API key "${keyName}" is required`);
     this.name = 'MissingKeyError';
+  }
+}
+
+export class MissingProxyError extends Error {
+  constructor() {
+    super('A personal proxy is required for this source');
+    this.name = 'MissingProxyError';
   }
 }
 

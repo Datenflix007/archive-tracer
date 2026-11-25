@@ -37,6 +37,26 @@ function newId(): string {
 
 export function entryFromHit(hit: Hit, person: PersonQuery, now = new Date()): FolderEntry {
   const ts = now.toISOString();
+  if (hit.storage === 'link-only') {
+    // NARA Catalog API terms: "Please do not cache or store any content returned by the API."
+    // Keep only identifier, link, retrieval date and query; the user adds their own notes.
+    const provenance = { ...hit.provenance, collection: '' };
+    const title = `Datensatz im ${hit.provenance.sourceName} (${hit.provenance.reference})`;
+    return {
+      id: newId(),
+      createdAt: ts,
+      updatedAt: ts,
+      person,
+      personLabel: fullName(person) || 'Ohne Namen',
+      kind: 'api',
+      title,
+      details: [],
+      dateRange: '',
+      provenance,
+      citation: citation('', provenance),
+      note: '',
+    };
+  }
   return {
     id: newId(),
     createdAt: ts,
