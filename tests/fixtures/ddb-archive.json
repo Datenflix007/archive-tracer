@@ -1,0 +1,55 @@
+{
+  "responseHeader":{
+    "zkConnected":true,
+    "status":0,
+    "QTime":30,
+    "params":{
+      "q":"Goldberg AND Ryfka",
+      "fl":"id,label,provider,dataprovider,apd_reference_number,apd_context,apd_document_type,begin_time,end_time,view,sector_fct,description",
+      "fq":"sector_fct:sec_01",
+      "rows":"3"
+    }
+  },
+  "response":{
+    "numFound":7,
+    "start":0,
+    "numFoundExact":true,
+    "docs":[{
+      "id":"5RKNVA6HENTFH6PUKVO33L2QWE42M7EV",
+      "provider":["Brandenburgisches Landeshauptarchiv"],
+      "sector_fct":"sec_01",
+      "label":["Goldberg, Ryfka"],
+      "view":["36A","36A Oberfinanzpräsident Berlin-Brandenburg Rep. 36A Oberfinanzpräsident Berlin-Brandenburg","Rep. 36A Oberfinanzpräsident Berlin-Brandenburg >> Rep. 36A Oberfinanzpräsident Berlin-Brandenburg (II) Vermögensverwertungsstelle >> Einzelfälle >> Personen A - Z >> Buchstabe G","1941-1942","Enthält u. a.: Goldberg, Manfred. - Goldberg, Pepi. - Goldberg, Agathe. - Goldberg, Ferdinand. - Goldberg, Henny. - Goldberg, Herbert.","Akte","https://blha-recherche.brandenburg.de/de/#/details/viewer/1986273?selectedId=1986273"],
+      "apd_context":"Rep. 36A Oberfinanzpräsident Berlin-Brandenburg >> Rep. 36A Oberfinanzpräsident Berlin-Brandenburg (II) Vermögensverwertungsstelle >> Einzelfälle >> Personen A - Z >> Buchstabe G",
+      "apd_document_type":["Akte"],
+      "apd_reference_number":["36A"],
+      "begin_time":[708572],
+      "description":["Enthält u. a.: Goldberg, Manfred. - Goldberg, Pepi. - Goldberg, Agathe. - Goldberg, Ferdinand. - Goldberg, Henny. - Goldberg, Herbert."],
+      "end_time":[709301]
+    },{
+      "id":"HNXBR5XIHAN6SRFU4LRTZWQOFNQ52P3C",
+      "provider":["Landesarchiv Berlin"],
+      "sector_fct":"sec_01",
+      "label":["Verfahren Mordka Goldberg, 233 Chaussée de Wavre, Brüssel, gegen das Deutsche Reich"],
+      "view":["Für nähere Informationen zu Nutzungs- und Verwertungsrechten kontaktieren Sie bitte info@landesarchiv.berlin.de.","B Rep. 025-02 Nr. 1402/66","registratursignatur: B Rep. 025-02 Nr. 22 WGA 1402/66","B Rep. 025-02 Wiedergutmachungsämter von Berlin Geschäftsstelle 2","1966","darin: Geschädigt: Ryfka Goldberg, geb. Konigsmann  enthält: Enthält: Schmuck.- Edelmetallgegenstände.","Archivale","Verweis: B Rep. 032, Treuhänder Reg. Nr. G/Sammel/149","Edition: 22 WGA 1402/66","Entnommen: Kt. 134 oder Kt. 135 oder Kt. 136 oder Kt. 137"],
+      "apd_context":"B Rep. 025-02 Wiedergutmachungsämter von Berlin Geschäftsstelle 2",
+      "apd_document_type":["Archivale"],
+      "apd_reference_number":["B Rep. 025-02 Nr. 1402/66","B Rep. 025-02 Nr. 22 WGA 1402/66"],
+      "begin_time":[717702],
+      "description":["darin: Geschädigt: Ryfka Goldberg, geb. Konigsmann enthält: Enthält: Schmuck.- Edelmetallgegenstände."],
+      "end_time":[718066]
+    },{
+      "id":"6FMJYVFMD5FAF4CEXXCGLTNNPPHLFPHD",
+      "provider":["Landesarchiv Berlin"],
+      "sector_fct":"sec_01",
+      "label":["Verfahren Mordcha Goldberg (*20.12.1906 oder *30.12.1906), 233 Chaussee de Wavre, Brüssel, Belgien, früher Ave. de Laeken 28, Brüssel, gegen das Deutsche Reich"],
+      "view":["Für nähere Informationen zu Nutzungs- und Verwertungsrechten kontaktieren Sie bitte info@landesarchiv.berlin.de.","B Rep. 025-02 Nr. 13575/59","registratursignatur: B Rep. 025-02 Nr. 23 WGA 13575/59","B Rep. 025-02 Wiedergutmachungsämter von Berlin Geschäftsstelle 2","1959","darin: Geschädigt: Rywka (Ryfka, Regine) Goldberg, geb. Kenigsman (Königsman, Koenigsman) (Mutter), Doba (Dolly) Goldstein, geb. Goldberg (Schwester)  enthält: Enthält: Gold, Silber, Schmuck.- Hausrat, Rue de Merode 145, Brüssel.","Archivale","Verweis: B Rep. 032, Treuhänder Reg. Nr. G/9295/G","Edition: 23 WGA 13575/59; 23 WGA 13576/59","Entnommen: Kt. 134 oder Kt. 135 oder Kt. 136 oder Kt. 137"],
+      "apd_context":"B Rep. 025-02 Wiedergutmachungsämter von Berlin Geschäftsstelle 2",
+      "apd_document_type":["Archivale"],
+      "apd_reference_number":["B Rep. 025-02 Nr. 13575/59","B Rep. 025-02 Nr. 23 WGA 13575/59"],
+      "begin_time":[715145],
+      "description":["darin: Geschädigt: Rywka (Ryfka, Regine) Goldberg, geb. Kenigsman (Königsman, Koenigsman) (Mutter), Doba (Dolly) Goldstein, geb. Goldberg (Schwester) enthält: Enthält: Gold, Silber, Schmuck.- Hausrat, Rue de Merode 145, Brüssel."],
+      "end_time":[715509]
+    }]
+  }
+}

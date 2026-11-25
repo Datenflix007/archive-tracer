@@ -1,0 +1,165 @@
+{
+  "head" : {
+    "vars" : [ "item", "itemLabel", "itemDescription", "type", "birth", "death", "birthPlaceLabel", "deathPlaceLabel", "commemorated", "commemoratedLabel", "address" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "type" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26703203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q44162578"
+      },
+      "commemorated" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q132137524"
+      },
+      "address" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Bamberger Str. 27, 10779 Berlin-Wilmersdorf"
+      },
+      "itemLabel" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein für Margarete Goldberg"
+      },
+      "itemDescription" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein in Berlin-Wilmersdorf"
+      },
+      "commemoratedLabel" : {
+        "type" : "literal",
+        "value" : "Q132137524"
+      }
+    }, {
+      "type" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26703203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q44162578"
+      },
+      "commemorated" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q132137524"
+      },
+      "address" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Bamberger Str. 27, Charlottenburg-Wilmersdorf"
+      },
+      "itemLabel" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein für Margarete Goldberg"
+      },
+      "itemDescription" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein in Berlin-Wilmersdorf"
+      },
+      "commemoratedLabel" : {
+        "type" : "literal",
+        "value" : "Q132137524"
+      }
+    }, {
+      "type" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26703203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q44178208"
+      },
+      "commemorated" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q138607190"
+      },
+      "address" : {
+        "xml:lang" : "nn",
+        "type" : "literal",
+        "value" : "Sorgenfrigata 35, 0365 Oslo"
+      },
+      "itemLabel" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein für Alexander Goldberg"
+      },
+      "commemoratedLabel" : {
+        "type" : "literal",
+        "value" : "Q138607190"
+      }
+    }, {
+      "type" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26703203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q44426053"
+      },
+      "commemorated" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q104672701"
+      },
+      "address" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Sebastianstraße 16, 10179 Berlin-Mitte"
+      },
+      "itemLabel" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein für Erika Goldberg"
+      },
+      "itemDescription" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein in Berlin-Mitte"
+      },
+      "commemoratedLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Erika Goldberg"
+      }
+    }, {
+      "type" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26703203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q44426053"
+      },
+      "commemorated" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q104672701"
+      },
+      "address" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Sebastianstraße 16"
+      },
+      "itemLabel" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein für Erika Goldberg"
+      },
+      "itemDescription" : {
+        "xml:lang" : "de",
+        "type" : "literal",
+        "value" : "Stolperstein in Berlin-Mitte"
+      },
+      "commemoratedLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Erika Goldberg"
+      }
+    } ]
+  }
+}

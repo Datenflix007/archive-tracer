@@ -1,0 +1,46 @@
+{
+  "responseHeader":{
+    "zkConnected":true,
+    "status":0,
+    "QTime":809,
+    "params":{
+      "q":"Goldberg",
+      "fl":"id,label,provider,dataprovider,apd_reference_number,apd_context,apd_document_type,begin_time,end_time,view,sector_fct,description",
+      "fq":"-sector_fct:sec_01",
+      "rows":"3"
+    }
+  },
+  "response":{
+    "numFound":3136,
+    "start":0,
+    "numFoundExact":true,
+    "docs":[{
+      "id":"FI655JQAX652CDI7GXQ55I52UTMOZKNA",
+      "provider":["Bildarchiv des Herder-Instituts für historische Ostmitteleuropaforschung","Herder-Institut für historische Ostmitteleuropaforschung – Institut der Leibniz-Gemeinschaft"],
+      "sector_fct":"sec_05",
+      "label":["Wasserturm Goldberg"],
+      "view":["Es gelten die Nutzungsbedingungen des Herder-Instituts. Nutzungsanfragen richten Sie bitte per E-Mail an: bildarchiv@herder-institut.de.","Foto","6,1/6,3 cm","Herstellung","Złotoryja, pow. złotoryjski/Goldberg, Kr. Goldberg","1937","Wasserturm Goldberg","Herder-Institut, Marburg","242121","NBA"],
+      "apd_document_type":["Foto"],
+      "begin_time":[707111],
+      "end_time":[707475]
+    },{
+      "id":"GDFC26QA4GUF4PJROSESS3NVC72O5DZC",
+      "provider":["Bildarchiv des Herder-Instituts für historische Ostmitteleuropaforschung","Herder-Institut für historische Ostmitteleuropaforschung – Institut der Leibniz-Gemeinschaft"],
+      "sector_fct":"sec_05",
+      "label":["Stadtansicht Goldberg"],
+      "view":["Es gelten die Nutzungsbedingungen des Herder-Instituts. Nutzungsanfragen richten Sie bitte per E-Mail an: bildarchiv@herder-institut.de.","Foto","9/13,8 cm","Herstellung","Złotoryja, pow. złotoryjski/Goldberg, Kr. Goldberg","vor 1945","Stadtansicht Goldberg","Herder-Institut, Marburg","242102","NBA"],
+      "apd_document_type":["Foto"],
+      "begin_time":[708937],
+      "end_time":[710032]
+    },{
+      "id":"FJBOZ3RRRJ23KSJE3KRNZ3UHAMRJ5VYR",
+      "provider":["Bildarchiv des Herder-Instituts für historische Ostmitteleuropaforschung","Herder-Institut für historische Ostmitteleuropaforschung – Institut der Leibniz-Gemeinschaft"],
+      "sector_fct":"sec_05",
+      "label":["Springbrunnen Goldberg"],
+      "view":["Es gelten die Nutzungsbedingungen des Herder-Instituts. Nutzungsanfragen richten Sie bitte per E-Mail an: bildarchiv@herder-institut.de.","Foto","8,8/11,7 cm","Herstellung","Złotoryja, pow. złotoryjski/Goldberg, Kr. Goldberg","vor 1945","Brunnen Goldberg","Herder-Institut, Marburg","242116","NBA"],
+      "apd_document_type":["Foto"],
+      "begin_time":[708937],
+      "end_time":[710032]
+    }]
+  }
+}
