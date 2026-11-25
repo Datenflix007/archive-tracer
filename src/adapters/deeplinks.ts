@@ -2,7 +2,7 @@ import type { PersonQuery, SourceAdapter } from '../types';
 import { fullName, surnames } from '../lib/query';
 
 /**
- * Sources without a usable public API (docs/sources.md §1, §7–16).
+ * Sources without a usable public API (docs/sources.md §7–16).
  * No scraping, no internal endpoints: only links that open the source's own search.
  * Findings are copied into the folder manually by the user.
  */
@@ -12,19 +12,6 @@ const surname = (q: PersonQuery) => surnames(q)[0] ?? '';
 
 const NOT_PREFILLED = 'Die Suche dort lässt sich nicht per Link vorausfüllen. Bitte die Suchbegriffe einfügen.';
 const UNVERIFIED = 'Ob die Suche vorausgefüllt erscheint, hängt von der Website ab. Sonst bitte die Suchbegriffe einfügen.';
-
-export const naraAdapter: SourceAdapter = {
-  meta: {
-    id: 'nara',
-    name: 'National Archives (USA), Katalog',
-    description: 'US-Nationalarchiv, u. a. erbeutete deutsche Akten, Kriegsverbrecherprozesse, Militärunterlagen.',
-    access: 'api-proxy',
-    homepage: 'https://catalog.archives.gov/',
-    termsUrl: 'https://www.archives.gov/research/catalog/help/api',
-    deepLinkNote: 'Die direkte Abfrage über die Schnittstelle folgt später (eigener Proxy und NARA-Key nötig). Bis dahin per Link.',
-  },
-  buildDeepLink: (q) => `https://catalog.archives.gov/search?q=${enc(name(q))}`,
-};
 
 export const deepLinkAdapters: SourceAdapter[] = [
   {

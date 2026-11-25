@@ -3,13 +3,22 @@ import { archivportalAdapter, ddbAdapter } from './ddb';
 import { ehriAdapter } from './ehri';
 import { europeanaAdapter } from './europeana';
 import { wikidataAdapter } from './wikidata';
-import { deepLinkAdapters, naraAdapter } from './deeplinks';
+import { naraCatalogAdapter, naraNsdapAdapter } from './nara';
+import { deepLinkAdapters } from './deeplinks';
 
-/** Sources queried directly from the browser. */
-export const apiAdapters: SourceAdapter[] = [archivportalAdapter, ehriAdapter, wikidataAdapter, ddbAdapter, europeanaAdapter];
+/** Sources queried by archive-tracer itself (directly, or through the user's own proxy). */
+export const apiAdapters: SourceAdapter[] = [
+  archivportalAdapter,
+  naraNsdapAdapter,
+  naraCatalogAdapter,
+  ehriAdapter,
+  wikidataAdapter,
+  ddbAdapter,
+  europeanaAdapter,
+];
 
-/** Sources reachable only through links (incl. api-proxy sources until the proxy exists). */
-export const linkAdapters: SourceAdapter[] = [...deepLinkAdapters, naraAdapter];
+/** Sources reachable only through links. */
+export const linkAdapters: SourceAdapter[] = deepLinkAdapters;
 
 export const allAdapters: SourceAdapter[] = [...apiAdapters, ...linkAdapters];
 
