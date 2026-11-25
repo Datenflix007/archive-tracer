@@ -1,0 +1,13 @@
+{
+  // archive-tracer proxy — deploy with: npx wrangler deploy  (see docs/proxy.md)
+  "name": "archive-tracer-proxy",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-01",
+  // No logs, no traces: the proxy must not record what people search for.
+  "observability": { "enabled": false, "logs": { "enabled": false } },
+  "workers_dev": true,
+  "vars": {
+    // Comma-separated list of sites allowed to use this proxy (no trailing slash).
+    "ALLOWED_ORIGINS": "https://datenflix007.github.io,http://localhost:5173,http://localhost:4173"
+  }
+}
