@@ -1,16 +1,18 @@
 import type { Hit, PersonQuery, SearchContext, SourceAdapter } from '../types';
-import { MissingKeyError, SourceHttpError } from '../types';
+import { MissingKeyError, MissingProxyError, SourceHttpError } from '../types';
 import { apiAdapters, linkAdapters } from '../adapters';
 import { citation } from '../lib/citation';
 import { entryFromHit } from '../lib/folder';
 import { putEntry } from '../lib/db';
 import { getKey } from '../lib/keys';
+import { getProxyUrl } from '../lib/proxy';
 import { describeQuery, fullName, hasName } from '../lib/query';
 import { announce, append, clear, copyText, extLink, field, h } from './dom';
 import { openManualDialog } from './manual';
-import { loadQuery, saveQuery } from './state';
+import { loadOptions, loadQuery, saveOptions, saveQuery, type SearchOptions } from './state';
 
 let currentSearch: AbortController | null = null;
+let lastQuery: PersonQuery = loadQuery();
 
 export function renderSearch(main: HTMLElement): void {
   const q = loadQuery();
@@ -36,6 +38,9 @@ export function renderSearch(main: HTMLElement): void {
   const birthPlace = inp('birthPlace');
   const lastResidence = inp('lastResidence');
   const parents = inp('parents');
+  const membershipNumber = inp('membershipNumber', { inputmode: 'numeric' });
+  const nsdapBox = h('input', { type: 'checkbox', id: 'opt-nsdap' });
+  nsdapBox.checked = loadOptions().nsdap;
 
   const readForm = (): PersonQuery => ({
     firstName: firstName.value.trim(),
@@ -51,6 +56,7 @@ export function renderSearch(main: HTMLElement): void {
     birthPlace: birthPlace.value.trim(),
     lastResidence: lastResidence.value.trim(),
     parents: parents.value.trim(),
+    membershipNumber: membershipNumber.value.trim(),
   });
 
   const form = h(
@@ -66,7 +72,9 @@ export function renderSearch(main: HTMLElement): void {
           return;
         }
         saveQuery(query);
-        void runSearch(query, results);
+        const options: SearchOptions = { nsdap: nsdapBox.checked };
+        saveOptions(options);
+        void runSearch(query, results, options);
       },
     },
     h(
@@ -84,7 +92,7 @@ export function renderSearch(main: HTMLElement): void {
     ),
     h(
       'details',
-      { class: 'more', open: !!(q.birthDate || q.birthYear || q.birthPlace || q.lastResidence || q.parents) },
+      { class: 'more', open: !!(q.birthDate || q.birthYear || q.birthPlace || q.lastResidence || q.parents || q.membershipNumber) },
       h('summary', {}, 'Weitere Angaben (helfen beim Einordnen der Treffer)'),
       h(
         'div',
@@ -95,11 +103,22 @@ export function renderSearch(main: HTMLElement): void {
         field('Geburtsort', birthPlace),
         field('Letzter bekannter Wohnort', lastResidence),
         field('Eltern', parents, 'Namen der Eltern, falls bekannt'),
+        field('NSDAP-Mitgliedsnummer', membershipNumber, 'falls bekannt; wird in der Mitgliederkartei (A3340) gesucht'),
       ),
       h(
         'p',
         { class: 'hint' },
         'Die Archive werden derzeit nach Namen durchsucht. Die weiteren Angaben werden mit der Suche gespeichert und erscheinen in der Kopierhilfe. Ein Abgleich der Treffer mit diesen Angaben folgt in einer späteren Version.',
+      ),
+    ),
+    h(
+      'div',
+      { class: 'check' },
+      nsdapBox,
+      h(
+        'label',
+        { for: 'opt-nsdap' },
+        'Auch die NSDAP-Mitgliederkartei durchsuchen (NARA A3340; mit eigenem Proxy werden pro Suche etwa 10–15 MB geladen)',
       ),
     ),
     h('div', { class: 'actions' }, h('button', { type: 'submit', class: 'primary' }, 'Suchen')),
@@ -116,20 +135,22 @@ export function renderSearch(main: HTMLElement): void {
     results,
   ]);
 
-  if (hasName(q) && sessionStorage.getItem('archive-tracer:searched') === '1') void runSearch(q, results);
+  if (hasName(q) && sessionStorage.getItem('archive-tracer:searched') === '1') void runSearch(q, results, loadOptions());
 }
 
-async function runSearch(q: PersonQuery, results: HTMLElement): Promise<void> {
+async function runSearch(q: PersonQuery, results: HTMLElement, options: SearchOptions): Promise<void> {
   currentSearch?.abort();
   const controller = new AbortController();
   currentSearch = controller;
   sessionStorage.setItem('archive-tracer:searched', '1');
+  lastQuery = q;
   clear(results);
 
   const ctx: SearchContext = {
     fetch: (...args) => fetch(...args),
     signal: controller.signal,
     getKey,
+    proxyUrl: getProxyUrl(),
     now: () => new Date(),
   };
 
@@ -146,14 +167,15 @@ async function runSearch(q: PersonQuery, results: HTMLElement): Promise<void> {
   const linkSection = renderLinkSection(q);
   append(results, [apiSection, linkSection]);
 
+  const active = apiAdapters.filter((a) => options.nsdap || a.meta.id !== 'nara-a3340');
   await Promise.all(
-    apiAdapters.map(async (adapter) => {
+    active.map(async (adapter) => {
       const box = sourceBox(adapter);
       apiSection.appendChild(box.el);
       try {
         const res = await adapter.search!(q, ctx);
         if (controller.signal.aborted) return;
-        box.done(res.hits, res.total, q);
+        box.done(res.hits, res.total, q, res.notice);
       } catch (err) {
         if (controller.signal.aborted) return;
         box.fail(err);
@@ -173,8 +195,9 @@ function sourceBox(adapter: SourceAdapter) {
 
   return {
     el,
-    done(hits: Hit[], total: number, q: PersonQuery) {
+    done(hits: Hit[], total: number, q: PersonQuery, notice?: string) {
       badge.textContent = String(total);
+      if (notice) body.insertBefore(h('p', { class: 'source-notice' }, notice), list);
       status.textContent =
         total === 0
           ? 'Keine Treffer.'
@@ -190,7 +213,12 @@ function sourceBox(adapter: SourceAdapter) {
     },
     fail(err: unknown) {
       badge.textContent = '!';
-      if (err instanceof MissingKeyError) {
+      if (err instanceof MissingProxyError) {
+        status.textContent =
+          'Diese Quelle erlaubt keinen direkten Abruf aus dem Browser. Mit einem eigenen, kostenlosen Proxy (und für den NARA-Katalog einem eigenen NARA-Key) wird sie mitdurchsucht. ';
+        status.append(h('a', { href: '#/einstellungen' }, 'Einrichten unter „Einstellungen“'), ' · ', extLink(adapter.buildDeepLink(lastQuery), 'Bis dahin: Suche im Katalog öffnen'));
+        el.open = false;
+      } else if (err instanceof MissingKeyError) {
         status.textContent = 'Für diese Quelle wird ein eigener, kostenloser API-Key benötigt. ';
         status.append(h('a', { href: '#/einstellungen' }, 'Key unter „Einstellungen“ eintragen'));
         el.open = true;
@@ -240,6 +268,9 @@ function hitItem(hit: Hit, q: PersonQuery): HTMLLIElement {
       saveBtn,
       h('button', { type: 'button', onclick: () => void copyText(cite) }, 'Zitat kopieren'),
     ),
+    hit.storage === 'link-only'
+      ? h('p', { class: 'hint' }, 'Wird in der Mappe nur mit Kennung und Link gespeichert (Nutzungsbedingungen der Quelle).')
+      : null,
     h('details', { class: 'cite' }, h('summary', {}, 'Zitiervorschlag'), h('p', {}, cite)),
   );
 }

@@ -21,3 +21,28 @@ export function saveQuery(q: PersonQuery): void {
     /* ignore */
   }
 }
+
+/** Search options for this tab. */
+export interface SearchOptions {
+  /** Include the NSDAP membership card index (A3340); downloads several MB per search via the proxy. */
+  nsdap: boolean;
+}
+const OPTIONS_KEY = 'archive-tracer:options';
+
+export function loadOptions(): SearchOptions {
+  try {
+    const raw = sessionStorage.getItem(OPTIONS_KEY);
+    if (raw) return { nsdap: true, ...(JSON.parse(raw) as Partial<SearchOptions>) };
+  } catch {
+    /* ignore */
+  }
+  return { nsdap: true };
+}
+
+export function saveOptions(o: SearchOptions): void {
+  try {
+    sessionStorage.setItem(OPTIONS_KEY, JSON.stringify(o));
+  } catch {
+    /* ignore */
+  }
+}

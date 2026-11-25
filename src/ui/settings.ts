@@ -1,5 +1,6 @@
 import { apiAdapters } from '../adapters';
 import { clearAllKeys, getKey, isPersisted, removeKey, setKey } from '../lib/keys';
+import { getProxyUrl, isValidProxyUrl, setProxyUrl } from '../lib/proxy';
 import { announce, append, extLink, field, h } from './dom';
 import { applyTheme, getTheme, type Theme } from './theme';
 
@@ -73,6 +74,7 @@ export function renderSettings(main: HTMLElement): void {
         'Alle Keys löschen',
       ),
     ),
+    proxySection(),
     h('h2', {}, 'Darstellung'),
     themeSelect(),
   ]);
@@ -89,4 +91,58 @@ function themeSelect(): HTMLElement {
   select.value = getTheme();
   select.addEventListener('change', () => applyTheme(select.value as Theme, true));
   return field('Farbschema', select);
+}
+
+const REPO = 'https://github.com/Datenflix007/archive-tracer';
+
+function proxySection(): HTMLElement {
+  const input = h('input', { type: 'url', placeholder: 'https://archive-tracer-proxy.<name>.workers.dev', value: getProxyUrl() ?? '' });
+  const status = h('p', { class: 'hint', role: 'status' });
+  const test = async () => {
+    const url = input.value.trim().replace(/\/+$/, '');
+    if (!isValidProxyUrl(url)) {
+      status.textContent = 'Bitte eine gültige https-Adresse eingeben.';
+      return;
+    }
+    status.textContent = 'Prüfe …';
+    try {
+      const res = await fetch(`${url}/health`, { signal: AbortSignal.timeout(10_000) });
+      const data = (await res.json()) as { ok?: boolean; service?: string };
+      status.textContent = data.ok && data.service === 'archive-tracer-proxy' ? 'Proxy erreichbar ✓' : 'Antwort erhalten, aber kein archive-tracer-Proxy.';
+    } catch {
+      status.textContent = 'Proxy nicht erreichbar. Adresse und erlaubte Herkunft (ALLOWED_ORIGINS) prüfen.';
+    }
+  };
+  return h(
+    'form',
+    {
+      class: 'proxy-form',
+      onsubmit: (e: Event) => {
+        e.preventDefault();
+        const url = input.value.trim();
+        if (url && !isValidProxyUrl(url)) {
+          status.textContent = 'Bitte eine gültige https-Adresse eingeben.';
+          return;
+        }
+        setProxyUrl(url);
+        announce(url ? 'Proxy gespeichert.' : 'Proxy entfernt.');
+        if (url) void test();
+      },
+    },
+    h('h2', {}, 'Eigener Proxy (für NARA)'),
+    h(
+      'p',
+      {},
+      'Die Kartendaten der NSDAP-Mitgliederkartei (A3340) und der NARA-Katalog lassen sich nicht direkt aus dem Browser abrufen. Ein kleiner, kostenloser Cloudflare Worker, den Sie selbst einrichten, reicht die Anfragen weiter. Er leitet nur an NARA weiter, speichert nichts und protokolliert nichts.',
+    ),
+    h('p', {}, extLink(`${REPO}/blob/main/docs/proxy.md`, 'Anleitung: Proxy in 10 Minuten einrichten')),
+    field('Adresse des Proxys', input),
+    status,
+    h(
+      'div',
+      { class: 'actions' },
+      h('button', { type: 'submit', class: 'primary' }, 'Speichern'),
+      h('button', { type: 'button', onclick: () => void test() }, 'Verbindung testen'),
+    ),
+  );
 }
