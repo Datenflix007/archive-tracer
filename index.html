@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Dokumente zu Personen aus der Zeit des Zweiten Weltkriegs und der Shoah über mehrere Archive hinweg finden." />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <title>archive-tracer</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">Zum Inhalt springen</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="#/">archive-tracer</a>
+        <nav aria-label="Hauptnavigation">
+          <a href="#/">Suche</a>
+          <a href="#/mappe">Recherchemappe</a>
+          <a href="#/weiter">Wie geht es weiter?</a>
+          <a href="#/quellen">Quellen &amp; Grenzen</a>
+          <a href="#/einstellungen">Einstellungen</a>
+        </nav>
+        <button id="clear-keys" type="button" class="danger small" hidden>Keys löschen</button>
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1"></main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          In Erinnerung an die Menschen, die verfolgt, deportiert und ermordet wurden.
+          Kein Server, kein Tracking: Ihre Daten bleiben in Ihrem Browser.
+        </p>
+      </div>
+    </footer>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
